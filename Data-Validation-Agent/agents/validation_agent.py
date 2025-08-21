@@ -1,11 +1,15 @@
 import json
-from google.adk.agents import LlmAgent, tool
+from google.adk.agents import LlmAgent
 from tools.persistence_tools import persist_validation_result
 from agents.query_execution_agent import SourceQueryExecutionAgent, TargetQueryExecutionAgent
 from config.settings import SUB_AGENT_MODEL
 
 class ValidationAgent(LlmAgent):
-    def __init__(self, model_name: str = SUB_AGENT_MODEL,
+    source_query_agent: SourceQueryExecutionAgent
+    target_query_agent: TargetQueryExecutionAgent
+
+    def __init__(self,
+                 model_name: str = SUB_AGENT_MODEL,
                  source_query_agent: SourceQueryExecutionAgent = None,
                  target_query_agent: TargetQueryExecutionAgent = None):
         super().__init__(
@@ -18,15 +22,13 @@ class ValidationAgent(LlmAgent):
                            You must accurately identify discrepancies and ensure all validation results are persisted.
                            When encountering complex scenarios, you may consult the knowledge base for historical
                            validation patterns and remediation advice.""",
-            tools=[persist_validation_result] # Only persistence tool is directly used by this agent
+            tools=[persist_validation_result],
+            source_query_agent=source_query_agent,
+            target_query_agent=target_query_agent
         )
-        self.source_query_agent = source_query_agent
-        self.target_query_agent = target_query_agent
-
-        if not self.source_query_agent or not self.target_query_agent:
+        if not source_query_agent or not target_query_agent:
             raise ValueError("Source and Target Query Execution Agents must be provided to ValidationAgent.")
 
-    @tool
     async def validate_data(self, source_db_name: str, target_db_name: str, source_table: str, target_table: str, validation_rules: list) -> dict:
         """
         Performs data validation based on specified rules by querying source and target databases.

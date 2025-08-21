@@ -1,4 +1,3 @@
-from google.adk.agents import tool
 # import firebase_admin # You would need to install firebase-admin and initialize it
 # from firebase_admin import credentials, firestore
 
@@ -8,7 +7,6 @@ from google.adk.agents import tool
 # firebase_admin.initialize_app(cred)
 # db = firestore.client()
 
-@tool
 async def retrieve_prompt_template(template_name: str, collection_name: str) -> dict:
     """
     (Conceptual Tool) Retrieves a prompt template from a database (e.g., Firestore).
@@ -54,7 +52,6 @@ async def retrieve_prompt_template(template_name: str, collection_name: str) -> 
         """}
     return {"template_content": "Default template: Source Table: {source_table}, Target Table: {target_table}. Rules: {rules_description}"}
 
-@tool
 async def retrieve_context_for_prompt(context_key: str) -> dict:
     """
     (Conceptual Tool) Retrieves additional contextual information to enrich a prompt.

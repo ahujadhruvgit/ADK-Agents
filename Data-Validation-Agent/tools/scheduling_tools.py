@@ -1,4 +1,4 @@
-from google.adk.agents import tool
+
 # import firebase_admin # You would need to install firebase-admin and initialize it
 # from firebase_admin import credentials, firestore
 
@@ -8,7 +8,6 @@ from google.adk.agents import tool
 # firebase_admin.initialize_app(cred)
 # db = firestore.client()
 
-@tool
 async def retrieve_scheduled_tasks(due_time: str, collection_name: str) -> list:
     """
     (Conceptual Tool) Retrieves scheduled tasks from a database (e.g., Firestore) that are due.
@@ -38,7 +37,6 @@ async def retrieve_scheduled_tasks(due_time: str, collection_name: str) -> list:
         ]
     return
 
-@tool
 async def update_task_status(task_id: str, status: str, collection_name: str) -> str:
     """
     (Conceptual Tool) Updates the status of a scheduled task in the database.

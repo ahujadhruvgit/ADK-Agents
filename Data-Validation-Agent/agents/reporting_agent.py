@@ -1,5 +1,5 @@
 import json
-from google.adk.agents import LlmAgent, tool
+from google.adk.agents import LlmAgent
 from config.settings import SUB_AGENT_MODEL, REPORTING_EMAIL_SENDER
 from tools.reporting_tools import send_email_report, generate_pdf_report
 
@@ -17,7 +17,6 @@ class ReportingAgent(LlmAgent):
             tools=[send_email_report, generate_pdf_report] # Tools added here
         )
 
-    @tool
     async def generate_report(self, validation_results: dict, recipients: list = None, format_type: str = "text") -> str:
         """
         Generates a summary report from the validation results and can optionally send it.

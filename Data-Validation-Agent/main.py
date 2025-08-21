@@ -1,6 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
-from google.adk.agents import get_fast_api_app
+from google.adk.cli.fast_api import get_fast_api_app
+from google.adk.agents import Agent
+
 import vertexai
 from vertexai import agent_engines
 
@@ -17,22 +19,16 @@ except Exception as e:
 # Create an instance of your Root Agent
 root_agent_instance = DataValidationRootAgent()
 
-# Wrap the ADK agent in a FastAPI application
-# This exposes the agent via HTTP endpoints for Cloud Run/Agent Engine deployment
-# Set web=True to enable the ADK Web UI
-app = get_fast_api_app(
-    root_agent_instance,
-    web=True, # Enable the ADK Web UI [1]
-    # You can configure session, memory, and artifact services here if not using Agent Engine's managed ones
-    # session_service=...,
-    # artifact_service=...,
-    # memory_bank=...
-)
+# Create the FastAPI application without passing the agent
+app = get_fast_api_app(web=True,agents_dir="agents")
+
+# Register the agent with the application after its creation
+app.agent = root_agent_instance
 
 # You can add custom FastAPI routes here if needed, e.g., for health checks or specific triggers
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "agent_name": root_agent_instance.name}
+    return {"status": "healthy", "agent_name": app.agent.name}
 
 if __name__ == "__main__":
     # For local development, run with Uvicorn

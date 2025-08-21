@@ -1,8 +1,6 @@
 import requests
-from google.adk.agents import tool
 from config.settings import MCP_TOOLBOX_BASE_URL, MCP_TOOLBOX_API_KEY
 
-@tool
 async def execute_sql_query_source(query: str, database_name: str) -> dict:
     """
     Executes a SQL query against the source database via the MCP Toolbox.
@@ -38,7 +36,6 @@ async def execute_sql_query_source(query: str, database_name: str) -> dict:
         print(f"Tool: Error communicating with MCP Toolbox: {e}")
         raise
 
-@tool
 async def execute_sql_query_target(query: str, database_name: str) -> dict:
     """
     Executes a SQL query against the target database via the MCP Toolbox.

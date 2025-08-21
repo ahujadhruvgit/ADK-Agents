@@ -1,9 +1,7 @@
-from google.adk.agents import tool
 from google.cloud import bigquery
 from google.api_core.exceptions import GoogleAPIError
 from config.settings import BIGQUERY_RESULTS_TABLE
 
-@tool
 def persist_validation_result(validation_data: dict) -> str:
     """
     Persists validation results to a BigQuery table.

@@ -1,4 +1,4 @@
-from google.adk.agents import LlmAgent, tool
+from google.adk.agents import LlmAgent
 from tools.database_tools import execute_sql_query_source, execute_sql_query_target
 from config.settings import SUB_AGENT_MODEL, SOURCE_DB_CONNECTION_NAME, TARGET_DB_CONNECTION_NAME
 
@@ -16,7 +16,6 @@ class SourceSearchAgent(LlmAgent):
             tools=[execute_sql_query_source]
         )
 
-    @tool
     async def discover_schema(self, table_name: str) -> dict:
         """
         Discovers schema information for a given table in the source database.
@@ -68,7 +67,6 @@ class TargetSearchAgent(LlmAgent):
             tools=[execute_sql_query_target]
         )
 
-    @tool
     async def discover_schema(self, table_name: str) -> dict:
         """
         Discovers schema information for a given table in the target database.

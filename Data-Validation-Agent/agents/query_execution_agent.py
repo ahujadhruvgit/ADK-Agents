@@ -1,4 +1,4 @@
-from google.adk.agents import LlmAgent, tool
+from google.adk.agents import LlmAgent
 from tools.database_tools import execute_sql_query_source, execute_sql_query_target
 from config.settings import SUB_AGENT_MODEL
 
@@ -14,7 +14,6 @@ class SourceQueryExecutionAgent(LlmAgent):
             tools=[execute_sql_query_source]
         )
 
-    @tool
     async def execute_query(self, query_text: str, database_name: str) -> dict:
         """
         Executes a given SQL query against the source database.
@@ -45,7 +44,6 @@ class TargetQueryExecutionAgent(LlmAgent):
             tools=[execute_sql_query_target]
         )
 
-    @tool
     async def execute_query(self, query_text: str, database_name: str) -> dict:
         """
         Executes a given SQL query against the target database.

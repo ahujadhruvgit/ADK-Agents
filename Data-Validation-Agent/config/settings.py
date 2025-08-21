@@ -2,7 +2,7 @@ import os
 
 # --- GCP Project Settings ---
 # Replace with your actual GCP Project ID and Location
-GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID", "your-gcp-project-id")
+GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID", "dev-moonshot-experiment")
 GCP_LOCATION = os.getenv("GCP_LOCATION", "us-central1")
 GCP_STAGING_BUCKET = os.getenv("GCP_STAGING_BUCKET", f"gs://{GCP_PROJECT_ID}-adk-staging")
 
@@ -10,7 +10,7 @@ GCP_STAGING_BUCKET = os.getenv("GCP_STAGING_BUCKET", f"gs://{GCP_PROJECT_ID}-adk
 # IMPORTANT: Replace with the actual URL and API Key of your deployed MCP Toolbox server
 # We'll run MCP Toolbox on port 7000 for this example to avoid conflicts with 8080
 MCP_TOOLBOX_BASE_URL = os.getenv("MCP_TOOLBOX_BASE_URL", "http://localhost:7000")
-MCP_TOOLBOX_API_KEY = os.getenv("MCP_TOOLBOX_API_KEY", "your-mcp-api-key") # Use a strong, securely managed key
+MCP_TOOLBOX_API_KEY = os.getenv("MCP_TOOLBOX_API_KEY", "123") # Use a strong, securely managed key
 
 # --- BigQuery Settings for Persistence ---
 # Replace with your BigQuery dataset and table for validation results
@@ -39,8 +39,8 @@ SUB_AGENT_MODEL = os.getenv("SUB_AGENT_MODEL", "gemini-1.5-flash")
 #   target_gcp_bigquery:
 #     type: bigquery
 #     project_id:...
-SOURCE_DB_CONNECTION_NAME = os.getenv("SOURCE_DB_CONNECTION_NAME", "your_source_db_connection_name")
-TARGET_DB_CONNECTION_NAME = os.getenv("TARGET_DB_CONNECTION_NAME", "your_target_db_connection_name")
+SOURCE_DB_CONNECTION_NAME = os.getenv("SOURCE_DB_CONNECTION_NAME", "123")
+TARGET_DB_CONNECTION_NAME = os.getenv("TARGET_DB_CONNECTION_NAME", "123")
 
 # --- Reporting Tools Settings ---
 REPORTING_EMAIL_SENDER = os.getenv("REPORTING_EMAIL_SENDER", "validation-alerts@yourcompany.com")

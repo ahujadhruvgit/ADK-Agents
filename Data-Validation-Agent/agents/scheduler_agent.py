@@ -1,4 +1,4 @@
-from google.adk.agents import LlmAgent, tool
+from google.adk.agents import LlmAgent
 from config.settings import SUB_AGENT_MODEL, FIRESTORE_SCHEDULE_COLLECTION
 from tools.scheduling_tools import retrieve_scheduled_tasks, update_task_status
 
@@ -15,7 +15,6 @@ class SchedulerAgent(LlmAgent):
             tools=[retrieve_scheduled_tasks, update_task_status] # Tools added here
         )
 
-    @tool
     async def process_scheduled_task(self, task_id: str, prompt_data: dict) -> dict:
         """
         Processes a scheduled task, initiating a validation workflow.
@@ -50,7 +49,6 @@ class SchedulerAgent(LlmAgent):
 
         return {"status": simulated_status, "task_id": task_id, "message": simulated_message}
 
-    @tool
     async def fetch_and_process_due_tasks(self, current_time: str) -> dict:
         """
         Fetches tasks due at the current time and initiates their processing.

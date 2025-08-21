@@ -1,9 +1,7 @@
-from google.adk.agents import tool
 # import smtplib # You would use a library like this for actual email sending
 # from email.mime.text import MIMEText
 # import pdfkit # You would use a library like this for PDF generation
 
-@tool
 async def send_email_report(sender: str, recipients: list, subject: str, body: str) -> str:
     """
     (Conceptual Tool) Sends a data validation report via email.
@@ -33,7 +31,6 @@ async def send_email_report(sender: str, recipients: list, subject: str, body: s
     #     return f"Failed to send email: {e}"
     return "Email sending simulated successfully."
 
-@tool
 async def generate_pdf_report(report_content: str, file_name: str) -> str:
     """
     (Conceptual Tool) Generates a PDF report from the given content.

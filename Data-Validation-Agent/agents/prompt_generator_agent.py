@@ -1,4 +1,4 @@
-from google.adk.agents import LlmAgent, tool
+from google.adk.agents import LlmAgent
 from config.settings import SUB_AGENT_MODEL, FIRESTORE_PROMPT_TEMPLATES_COLLECTION
 from tools.prompt_generation_tools import retrieve_prompt_template, retrieve_context_for_prompt
 
@@ -16,7 +16,6 @@ class PromptGeneratorAgent(LlmAgent):
             tools=[retrieve_prompt_template, retrieve_context_for_prompt] # Tools added here
         )
 
-    @tool
     async def generate_validation_plan_prompt(self, validation_request: dict, template_name: str = "default_validation_plan") -> str:
         """
         Generates a detailed prompt for the Root Agent or Validation Agent to plan a validation.
