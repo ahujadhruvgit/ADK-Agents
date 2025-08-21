@@ -1,5 +1,5 @@
 from google.adk.agents import LlmAgent
-from tools.prompt_generator_tool import call_prompt_generator
+from agents.tools.prompt_generator_tool import call_prompt_generator
 
 prompt_generator_agent = LlmAgent(
     name="prompt_generator_agent",

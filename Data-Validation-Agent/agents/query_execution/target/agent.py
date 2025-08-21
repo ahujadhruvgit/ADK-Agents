@@ -1,5 +1,5 @@
 from google.adk.agents import LlmAgent
-from tools.query_execution_tool import execute_query
+from agents.tools.query_execution_tool import execute_query
 
 target_query_execution_agent = LlmAgent(
     name="target_query_execution_agent",

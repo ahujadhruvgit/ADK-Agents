@@ -1,5 +1,5 @@
 from google.adk.agents import LlmAgent
-from tools.search_tool import search_knowledge_base
+from agents.tools.search_tool import search_knowledge_base
 
 source_search_agent = LlmAgent(
     name="source_search_agent",

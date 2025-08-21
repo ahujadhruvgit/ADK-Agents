@@ -12,6 +12,7 @@ from agents.scheduler.agent import scheduler_agent
 
 root_agent = Agent(
     name="data_validation_root_agent",
+    model="gemini-2.0-flash",
     description="The root agent for the data validation system. It orchestrates the other agents to perform data validation tasks based on user requests or scheduled triggers.",
     instruction="""You are the orchestrator of a multi-agent data validation system.
 Your primary role is to understand incoming requests and delegate tasks to the appropriate sub-agent.

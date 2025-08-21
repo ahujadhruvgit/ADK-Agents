@@ -1,5 +1,5 @@
 from google.adk.agents import LlmAgent
-from tools.validation_tool import persist_validation_result
+from agents.tools.validation_tool import persist_validation_result
 
 validation_agent = LlmAgent(
     name="validation_agent",
