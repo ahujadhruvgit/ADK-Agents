@@ -1,42 +1,37 @@
 from google.adk.agents import Agent
+from agents.search.agent import search_agent
+from agents.query_execution.agent import query_execution_agent
+from agents.validation.agent import validation_agent
+from agents.reporting.agent import reporting_agent
+from agents.prompt_generator.agent import prompt_generator_agent
+from agents.scheduler.agent import scheduler_agent
 
-def get_weather(city: str) -> dict:
-    """Retrieves the current weather report for a specified city.
-
-    Returns:
-        dict: A dictionary containing the weather information with a 'status' key ('success' or 'error') and a 'report' key with the weather details if successful, or an 'error_message' if an error occurred.
-    """
-    if city.lower() == "new york":
-        return {"status": "success",
-                "report": "The weather in New York is sunny with a temperature of 25 degrees Celsius (77 degrees Fahrenheit)."}
-    else:
-        return {"status": "error",
-                "error_message": f"Weather information for '{city}' is not available."}
-
-def get_current_time(city:str) -> dict:
-    """Returns the current time in a specified city.
-
-    Args:
-        dict: A dictionary containing the current time for a specified city information with a 'status' key ('success' or 'error') and a 'report' key with the current time details in a city if successful, or an 'error_message' if an error occurred.
-    """
-    import datetime
-    from zoneinfo import ZoneInfo
-
-    if city.lower() == "new york":
-        tz_identifier = "America/New_York"
-    else:
-        return {"status": "error",
-                "error_message": f"Sorry, I don't have timezone information for {city}."}
-
-    tz = ZoneInfo(tz_identifier)
-    now = datetime.datetime.now(tz)
-    return {"status": "success",
-            "report": f"""The current time in {city} is {now.strftime("%Y-%m-%d %H:%M:%S %Z%z")}"""}
+# Note: For these imports to work, the root of the project ('Data-Validation-Agent')
+# must be in the Python path. This is a standard setup for ADK projects.
+# The __init__.py files in each directory help Python recognize them as packages.
 
 root_agent = Agent(
-    name="weather_time_agent",
-    model="gemini-2.0-flash",
-    description="Agent to answer questions about the time and weather in a city.",
-    instruction="I can answer your questions about the time and weather in a city.",
-    tools=[get_weather, get_current_time]
+    name="data_validation_root_agent",
+    description="The root agent for the data validation system. It orchestrates the other agents to perform data validation tasks based on user requests or scheduled triggers.",
+    instruction="""You are the orchestrator of a multi-agent data validation system.
+Your primary role is to understand incoming requests and delegate tasks to the appropriate sub-agent.
+
+- For requests to **run a validation**, you will need to coordinate a workflow:
+  1. Use the `query_execution_agent` to get data from source and target.
+  2. Pass the data to the `validation_agent` to perform the comparison.
+  3. Use the `reporting_agent` to generate a summary of the results.
+- For requests to **find information** about past validations or other topics, use the `search_agent`.
+- For requests to **create a new validation task**, use the `prompt_generator_agent`.
+- For tasks initiated by the **scheduler**, the `scheduler_agent` is the entry point. You will then take over the orchestration.
+
+Carefully examine the user's intent to choose the correct sub-agent or sequence of agents.
+""",
+    sub_agents=[
+        search_agent,
+        query_execution_agent,
+        validation_agent,
+        reporting_agent,
+        prompt_generator_agent,
+        scheduler_agent,
+    ],
 )
